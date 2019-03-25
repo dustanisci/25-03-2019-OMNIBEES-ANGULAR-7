@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit {
   public formUser() {
     this.formGroupUser = this.formBuilder.group({
       id: this.formBuilder.control('', []),
-      name: this.formBuilder.control('', [Validators.required, Validators.pattern(/^[a-zA-Z ]*$/)]),
+      name: this.formBuilder.control('', [Validators.required, Validators.pattern(/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/)]),
       email: this.formBuilder.control('', [Validators.required, Validators.email]),
       cpf: this.formBuilder.control('', [Validators.pattern(/^[0-9]*$/), Validators.required, Validators.minLength(11), Validators.maxLength(11)]),
     });
@@ -45,6 +45,7 @@ export class UsersComponent implements OnInit {
   }
 
   public receiveSettingEmitted(event) {
+    this.ngxSmartModalService.resetModalData('createEdit');
     if (event.setting === 'edit') {
       this.formGroupUser.controls['id'].setValue(event.user._id);
       this.formGroupUser.controls['name'].setValue(event.user.name);
@@ -113,7 +114,8 @@ export class UsersComponent implements OnInit {
 
   public deletetUser(): void {
     this.spinner.show();
-    this.usersService.deleteUser(environment.users, this.formGroupUser.value.id)
+    this.setValueFormUser();
+    this.usersService.deleteUser(environment.users, this.user._id)
       .subscribe(
         result => {
           this.ngxSmartModalService.getModal('delete').close();
