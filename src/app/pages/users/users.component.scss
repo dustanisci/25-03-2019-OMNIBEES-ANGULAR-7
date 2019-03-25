@@ -1,0 +1,44 @@
+@import './src/assets/scss/palette.scss';
+
+form {
+  width: 200px;
+
+  label {
+    color: palette-color('primary', '1');
+  }
+
+  input[type='text'] {
+    border: 1.5px solid palette-color('primary', '1');
+  }
+
+  input[type='submit'] {
+    background: palette-color('primary', '1');
+    color: palette-color('primary', '5');
+  }
+
+  input[type='submit']:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.create-user {
+  width: 1110px;
+
+  @media only screen and (max-width: 1300px) {
+    width: 800px;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    width: 680px;
+  }
+
+  @media only screen and (max-width: 750px) {
+    width: 300px;
+  }
+
+  i {
+    font-size: 30px;
+    color: palette-color('primary', '1');
+  }
+}

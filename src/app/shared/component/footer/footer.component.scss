@@ -1,0 +1,7 @@
+@import './src/assets/scss/palette.scss';
+@import './src/assets/scss/omnibees.scss';
+
+footer{
+    background: palette-color('primary', '4');
+    color: palette-color('primary', '6');
+}

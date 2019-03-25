@@ -1,0 +1,21 @@
+<table *ngIf="data" class="text-center" align="center">
+  <thead>
+    <tr>
+      <th class="p-relative p-1" *ngFor="let item of data[0] | keyvalue | reverse">{{ item.key | capitalize }}</th>
+      <th class="p-relative p-1" *ngIf="settings === true">Settings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data | reverse | paginate: { itemsPerPage: 5, currentPage: pag } ">
+      <td class="p-relative p-1" *ngFor="let value of item | keyvalue | reverse">
+        {{ value.value}}
+      </td>
+      <td class="p-relative p-1 settings" *ngIf="settings === true">
+        <i class="material-icons ml-1 mr-1 cursor-pointer" (click)="eventOutput.emit({ setting: 'edit', user: item })">create</i>
+        <i class="material-icons ml-1 mr-1 cursor-pointer" (click)="eventOutput.emit({ setting: 'delete', _id: item._id })">delete_forever</i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<pagination-controls class="text-center" *ngIf="data" [previousLabel]="'Anterior'" [nextLabel]="'Próximo'" (pageChange)="pag = $event"></pagination-controls>

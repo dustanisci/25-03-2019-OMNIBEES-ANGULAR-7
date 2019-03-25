@@ -1,0 +1,50 @@
+@import 'src/assets/scss/omnibees.scss';
+@import 'src/assets/scss/palette.scss';
+
+table {
+  border-collapse: collapse;
+
+  @media only screen and (max-width: 1300px) {
+    width: 800px;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    width: 400px;
+  }
+
+  @media only screen and (max-width: 750px) {
+    width: 300px;
+    overflow: scroll;
+    display: block;
+  }
+
+  i{
+    font-size: 30px;
+  }
+
+  &,
+  th,
+  td {
+    border: 2px solid palette-color('primary', '1');
+  }
+
+  tr th {
+    background: palette-color('primary', '1');
+    color: palette-color('primary', '5');
+  }
+
+  th,
+  td {
+    min-width: 200px;
+
+    @media only screen and (max-width: 1300px) {
+      min-width: auto;
+    }
+  }
+
+  tbody {
+    .settings {
+      color: palette-color('primary', '1');
+    }
+  }
+}

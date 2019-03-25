@@ -1,0 +1,18 @@
+@import './assets/scss/omnibees.scss';
+@import './assets/scss/palette.scss';
+@import './assets/scss/fonts.scss';
+@import "~ngx-smart-modal/ngx-smart-modal";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+* {
+  font-family: 'roboto';
+  font-size: 12pt;
+}
