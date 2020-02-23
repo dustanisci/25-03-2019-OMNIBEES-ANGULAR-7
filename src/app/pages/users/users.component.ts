@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from './users.service';
-import { environment } from 'src/environments/environment';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NgxSmartModalService } from 'ngx-smart-modal';
+import { NgxSmartModalService, NgxSmartModalComponent } from 'ngx-smart-modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/model/user';
+import { Observable, of, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -31,20 +32,31 @@ export class UsersComponent implements OnInit {
   public formUser() {
     this.formGroupUser = this.formBuilder.group({
       id: this.formBuilder.control('', []),
-      name: this.formBuilder.control('', [Validators.required, Validators.pattern(/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/)]),
-      email: this.formBuilder.control('', [Validators.required, Validators.email]),
-      cpf: this.formBuilder.control('', [Validators.pattern(/^[0-9]*$/), Validators.required, Validators.minLength(11), Validators.maxLength(11)]),
+      name: this.formBuilder.control('', [
+        Validators.required,
+        Validators.pattern(/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/)
+      ]),
+      email: this.formBuilder.control('', [
+        Validators.required,
+        Validators.email
+      ]),
+      cpf: this.formBuilder.control('', [
+        Validators.pattern(/^[0-9]*$/),
+        Validators.required,
+        Validators.minLength(11),
+        Validators.maxLength(11)
+      ]),
     });
   }
 
-  public setValueFormUser() {
+  public setValueFormUser(): void {
     this.user._id = this.formGroupUser.value.id;
     this.user.cpf = this.formGroupUser.value.cpf;
     this.user.email = this.formGroupUser.value.email;
     this.user.name = this.formGroupUser.value.name;
   }
 
-  public receiveSettingEmitted(event) {
+  public receiveSettingEmitted(event): NgxSmartModalComponent {
     this.ngxSmartModalService.resetModalData('createEdit');
     if (event.setting === 'edit') {
       this.formGroupUser.controls['id'].setValue(event.user._id);
@@ -58,77 +70,62 @@ export class UsersComponent implements OnInit {
     return this.ngxSmartModalService.getModal('delete').open();
   }
 
-  public getUsers(): void {
+  public getUsers(): Observable<Subscription> {
     this.spinner.show();
-    this.usersService.getAllUsers(environment.users)
+    return of(this.usersService.getAllUsers()
       .subscribe(
-        result => {
+        (result: User[]) => {
           this.users = result;
-          setTimeout(() => {
-            this.spinner.hide();
-          }, 1000);
+          this.spinner.hide();
         },
-        error => {
+        () => {
+          this.spinner.hide();
           this.ngxSmartModalService.getModal('fail').open();
         }
-      );
+      ));
   }
 
-  public postUser(): void {
+
+  public insertUser(): void {
     this.spinner.show();
     this.setValueFormUser();
-    this.usersService.postUser(environment.users, this.user)
-      .subscribe(
-        result => {
-          this.ngxSmartModalService.getModal('createEdit').close();
-          this.getUsers();
-          setTimeout(() => {
-            this.spinner.hide();
-            this.ngxSmartModalService.getModal('success').open();
-          }, 1000);
-        },
-        error => {
-          this.ngxSmartModalService.getModal('fail').open();
-        }
-      );
+    this.usersService.insertUser(this.user).pipe(switchMap(() => this.getUsers())).subscribe(() => {
+      this.ngxSmartModalService.getModal('createEdit').close();
+      this.spinner.hide();
+      this.ngxSmartModalService.getModal('success').open();
+    }, () => {
+      this.spinner.hide();
+      this.ngxSmartModalService.getModal('fail').open();
+    });
   }
+
 
   public updateUser(): void {
     this.spinner.show();
     this.setValueFormUser();
-    this.usersService.updateUser(environment.users, this.user)
-      .subscribe(
-        result => {
-          this.ngxSmartModalService.getModal('createEdit').close();
-          this.getUsers();
-          setTimeout(() => {
-            this.spinner.hide();
-            this.ngxSmartModalService.getModal('success').open();
-          }, 1000);
-        },
-        error => {
-          this.ngxSmartModalService.getModal('fail').open();
-        }
-      );
+
+    this.usersService.updateUser(this.user).pipe(switchMap(() => this.getUsers())).subscribe(() => {
+      this.ngxSmartModalService.getModal('createEdit').close();
+      this.spinner.hide();
+      this.ngxSmartModalService.getModal('success').open();
+    }, () => {
+      this.spinner.hide();
+      this.ngxSmartModalService.getModal('fail').open();
+    });
   }
+
 
   public deletetUser(): void {
     this.spinner.show();
     this.setValueFormUser();
-    this.usersService.deleteUser(environment.users, this.user._id)
-      .subscribe(
-        result => {
-          this.ngxSmartModalService.getModal('delete').close();
-          this.getUsers();
-          setTimeout(() => {
-            this.spinner.hide();
-            this.ngxSmartModalService.getModal('success').open();
-          }, 1000);
-        },
-        error => {
-          this.ngxSmartModalService.getModal('fail').open();
-        }
-      );
+    this.usersService.deleteUser(this.user._id).pipe(switchMap(() => this.getUsers())).subscribe(() => {
+      this.ngxSmartModalService.getModal('delete').close();
+      this.spinner.hide();
+      this.ngxSmartModalService.getModal('success').open();
+    }, () => {
+      this.spinner.hide();
+      this.ngxSmartModalService.getModal('fail').open();
+    });
   }
 
 }

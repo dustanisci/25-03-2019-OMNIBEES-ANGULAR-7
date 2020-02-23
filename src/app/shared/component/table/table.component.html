@@ -1,6 +1,6 @@
 <table *ngIf="data" class="text-center" align="center">
   <thead>
-    <tr>
+    <tr *ngIf="data[0]">
       <th class="p-relative p-1" *ngFor="let item of data[0] | keyvalue | reverse">{{ item.key | capitalize }}</th>
       <th class="p-relative p-1" *ngIf="settings === true">Settings</th>
     </tr>
