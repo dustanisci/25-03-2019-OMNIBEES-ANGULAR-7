@@ -1,4 +1,4 @@
-# CRUD
+# CRUD 
 
 <b>Descrição:</b> Exemplo de criação, edição, listagem e exclusão de clientes no Angular 9. Implementado uma tabela de listagem e com paginação por 5 itens, possui validações no ato da criação ou edição. Acessível em celulares, tablets, notebooks e desktops.
 
