@@ -31,8 +31,7 @@ import { User } from 'src/app/shared/model/user';
   ],
   providers : [
     UsersService,
-    FormBuilder,
-    User
+    FormBuilder
   ]
 })
 export class UsersModule { }

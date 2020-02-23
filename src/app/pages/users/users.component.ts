@@ -13,15 +13,15 @@ import { User } from 'src/app/shared/model/user';
 })
 export class UsersComponent implements OnInit {
 
-  public users: User[];
+  public users: User[] = new Array<User>();
+  public user: User = new User();
   public formGroupUser: FormGroup;
 
   constructor(
     private usersService: UsersService,
     private spinner: NgxSpinnerService,
     public ngxSmartModalService: NgxSmartModalService,
-    private formBuilder: FormBuilder,
-    public user: User) { }
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getUsers();
