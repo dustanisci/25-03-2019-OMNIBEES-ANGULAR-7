@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n  <div class=\"d-block text-right mb-2 create-user align-center\">\r\n    <i class=\"material-icons cursor-pointer\"\r\n      (click)=\"ngxSmartModalService.setModalData('create', 'createEdit'); ngxSmartModalService.getModal('createEdit').open(); formUser();\">control_point</i>\r\n  </div>\r\n  <app-table [data]=\"users\" [settings]=\"true\" (eventOutput)=\"receiveSettingEmitted($event)\"></app-table>\r\n</div>\r\n\r\n<ngx-spinner bdColor=\"rgba(46, 26, 70,1)\" size=\"large\" color=\"#f9dc00\" type=\"ball-zig-zag-deflect\"></ngx-spinner>\r\n\r\n<ngx-smart-modal #createEdit identifier=\"createEdit\">\r\n  <form [formGroup]=\"formGroupUser\" class=\"align-center pt-2 pb-2\">\r\n\r\n    <label class=\"d-block fw-b\">Name</label>\r\n    <input type=\"text\" class=\"d-block mb-2 pl-1 pr-1\" formControlName=\"name\" />\r\n\r\n    <label class=\"d-block fw-b\">Email</label>\r\n    <input type=\"text\" class=\"d-block mb-2 pl-1 pr-1\" formControlName=\"email\" />\r\n\r\n    <label class=\"d-block fw-b\">CPF</label>\r\n    <input type=\"text\" maxlength=\"11\" class=\"d-block mb-2 pl-1 pr-1\" formControlName=\"cpf\" />\r\n\r\n    <input *ngIf=\"createEdit.getData() !== 'edit'\" [disabled]=\"!formGroupUser.valid\"\r\n      class=\"align-center mb-2 button cursor-pointer\" type=\"submit\" value=\"Cadastrar\" (click)=\"insertUser()\" />\r\n    <input *ngIf=\"createEdit.getData() === 'edit'\" [disabled]=\"!formGroupUser.valid\"\r\n      class=\"align-center mb-2 button cursor-pointer\" type=\"submit\" value=\"Atualizar\" (click)=\"updateUser()\" />\r\n  </form>\r\n</ngx-smart-modal>\r\n\r\n<ngx-smart-modal #delete identifier=\"delete\">\r\n  <h2 class=\"text-center\">Confirme a exclusão</h2>\r\n  <div class=\"d-block text-center\">\r\n    <button class=\"m-2 button cursor-pointer\" (click)=\"delete.close()\">Cancelar</button>\r\n    <button class=\"m-2 button danger cursor-pointer\" (click)=\"deletetUser()\">Confirmar</button>\r\n  </div>\r\n</ngx-smart-modal>\r\n\r\n<ngx-smart-modal #success identifier=\"success\">\r\n  <h2 class=\"success\">Realizado com sucesso.</h2>\r\n</ngx-smart-modal>\r\n\r\n<ngx-smart-modal #fail identifier=\"fail\">\r\n  <h2 class=\"fail\">Falhou, tente novamente mais tarde.</h2>\r\n</ngx-smart-modal>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n  <div class=\"d-block text-right mb-2 create-user align-center\">\r\n    <i class=\"material-icons cursor-pointer\"\r\n      (click)=\"receiveSettingEmitted()\">control_point</i>\r\n  </div>\r\n  <app-table [data]=\"users\" [settings]=\"true\" (eventOutput)=\"receiveSettingEmitted($event)\"></app-table>\r\n</div>\r\n\r\n<ngx-spinner bdColor=\"rgba(46, 26, 70,1)\" size=\"large\" color=\"#f9dc00\" type=\"ball-zig-zag-deflect\"></ngx-spinner>\r\n\r\n<ngx-smart-modal #createEdit identifier=\"createEdit\">\r\n  <form [formGroup]=\"formGroupUser\" class=\"align-center pt-2 pb-2\">\r\n\r\n    <label class=\"d-block fw-b\">Name</label>\r\n    <input type=\"text\" class=\"d-block mb-2 pl-1 pr-1\" formControlName=\"name\" />\r\n\r\n    <label class=\"d-block fw-b\">Email</label>\r\n    <input type=\"text\" class=\"d-block mb-2 pl-1 pr-1\" formControlName=\"email\" />\r\n\r\n    <label class=\"d-block fw-b\">CPF</label>\r\n    <input type=\"text\" maxlength=\"11\" class=\"d-block mb-2 pl-1 pr-1\" formControlName=\"cpf\" />\r\n\r\n    <input *ngIf=\"createEdit.getData() === actionCrud.Create\" [disabled]=\"!formGroupUser.valid\"\r\n      class=\"align-center mb-2 button cursor-pointer\" type=\"submit\" value=\"Cadastrar\" (click)=\"insertUser()\" />\r\n    <input *ngIf=\"createEdit.getData() === actionCrud.Edit\" [disabled]=\"!formGroupUser.valid\"\r\n      class=\"align-center mb-2 button cursor-pointer\" type=\"submit\" value=\"Atualizar\" (click)=\"updateUser()\" />\r\n  </form>\r\n</ngx-smart-modal>\r\n\r\n<ngx-smart-modal #delete identifier=\"delete\">\r\n  <h2 class=\"text-center\">Confirme a exclusão</h2>\r\n  <div class=\"d-block text-center\">\r\n    <button class=\"m-2 button cursor-pointer\" (click)=\"delete.close()\">Cancelar</button>\r\n    <button class=\"m-2 button danger cursor-pointer\" (click)=\"deletetUser()\">Confirmar</button>\r\n  </div>\r\n</ngx-smart-modal>\r\n\r\n<ngx-smart-modal #success identifier=\"success\">\r\n  <h2 class=\"success\">Realizado com sucesso.</h2>\r\n</ngx-smart-modal>\r\n\r\n<ngx-smart-modal #fail identifier=\"fail\">\r\n  <h2 class=\"fail\">Falhou, tente novamente mais tarde.</h2>\r\n</ngx-smart-modal>\r\n");
 
 /***/ }),
 
@@ -61,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<table *ngIf=\"data\" class=\"text-center\" align=\"center\">\r\n  <thead>\r\n    <tr *ngIf=\"data[0]\">\r\n      <th class=\"p-relative p-1\" *ngFor=\"let item of data[0] | keyvalue | reverse\">{{ item.key | capitalize }}</th>\r\n      <th class=\"p-relative p-1\" *ngIf=\"settings === true\">Settings</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody>\r\n    <tr *ngFor=\"let item of data | reverse | paginate: { itemsPerPage: 5, currentPage: pag } \">\r\n      <td class=\"p-relative p-1\" *ngFor=\"let value of item | keyvalue | reverse\">\r\n        {{ value.value}}\r\n      </td>\r\n      <td class=\"p-relative p-1 settings\" *ngIf=\"settings === true\">\r\n        <i class=\"material-icons ml-1 mr-1 cursor-pointer\" (click)=\"eventOutput.emit({ setting: 'edit', user: item })\">create</i>\r\n        <i class=\"material-icons ml-1 mr-1 cursor-pointer\" (click)=\"eventOutput.emit({ setting: 'delete', _id: item._id })\">delete_forever</i>\r\n      </td>\r\n    </tr>\r\n  </tbody>\r\n</table>\r\n\r\n<pagination-controls class=\"text-center\" *ngIf=\"data\" [previousLabel]=\"'Anterior'\" [nextLabel]=\"'Próximo'\" (pageChange)=\"pag = $event\"></pagination-controls>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<table *ngIf=\"data\" class=\"text-center\" align=\"center\">\r\n  <thead>\r\n    <tr *ngIf=\"data[0]\">\r\n      <th class=\"p-relative p-1\" *ngFor=\"let item of data[0] | keyvalue | reverse\">{{ item.key | capitalize }}</th>\r\n      <th class=\"p-relative p-1\" *ngIf=\"settings === true\">Settings</th>\r\n    </tr>\r\n  </thead>\r\n  <tbody>\r\n    <tr *ngFor=\"let item of data | reverse | paginate: { itemsPerPage: 5, currentPage: pag } \">\r\n      <td class=\"p-relative p-1\" *ngFor=\"let value of item | keyvalue | reverse\">\r\n        {{ value.value}}\r\n      </td>\r\n      <td class=\"p-relative p-1 settings\" *ngIf=\"settings === true\">\r\n        <i class=\"material-icons ml-1 mr-1 cursor-pointer\" (click)=\"eventOutput.emit({ setting: actionCrud.Edit, user: item })\">create</i>\r\n        <i class=\"material-icons ml-1 mr-1 cursor-pointer\" (click)=\"eventOutput.emit({ setting: actionCrud.Delete, _id: item._id })\">delete_forever</i>\r\n      </td>\r\n    </tr>\r\n  </tbody>\r\n</table>\r\n\r\n<pagination-controls class=\"text-center\" *ngIf=\"data\" [previousLabel]=\"'Anterior'\" [nextLabel]=\"'Próximo'\" (pageChange)=\"pag = $event\"></pagination-controls>\r\n");
 
 /***/ }),
 
@@ -493,6 +493,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_shared_model_user__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/model/user */ "./src/app/shared/model/user.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_enum_crud__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/shared/enum/crud */ "./src/app/shared/enum/crud.ts");
+
 
 
 
@@ -510,6 +512,7 @@ var UsersComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this.users = new Array();
         this.user = new src_app_shared_model_user__WEBPACK_IMPORTED_MODULE_6__["User"]();
+        this.actionCrud = src_app_shared_enum_crud__WEBPACK_IMPORTED_MODULE_9__["Crud"];
     }
     UsersComponent.prototype.ngOnInit = function () {
         this.getUsers();
@@ -542,16 +545,21 @@ var UsersComponent = /** @class */ (function () {
     };
     UsersComponent.prototype.receiveSettingEmitted = function (event) {
         this.ngxSmartModalService.resetModalData('createEdit');
-        if (event.setting === 'edit') {
+        if (event && event.setting === src_app_shared_enum_crud__WEBPACK_IMPORTED_MODULE_9__["Crud"].Edit) {
             this.formGroupUser.controls['id'].setValue(event.user._id);
             this.formGroupUser.controls['name'].setValue(event.user.name);
             this.formGroupUser.controls['cpf'].setValue(event.user.cpf);
             this.formGroupUser.controls['email'].setValue(event.user.email);
-            this.ngxSmartModalService.setModalData('edit', 'createEdit');
+            this.ngxSmartModalService.setModalData(src_app_shared_enum_crud__WEBPACK_IMPORTED_MODULE_9__["Crud"].Edit, 'createEdit');
             return this.ngxSmartModalService.getModal('createEdit').open();
         }
-        this.formGroupUser.controls['id'].setValue(event._id);
-        return this.ngxSmartModalService.getModal('delete').open();
+        if (event && event.setting === src_app_shared_enum_crud__WEBPACK_IMPORTED_MODULE_9__["Crud"].Delete) {
+            this.formGroupUser.controls['id'].setValue(event._id);
+            return this.ngxSmartModalService.getModal('delete').open();
+        }
+        this.ngxSmartModalService.setModalData(src_app_shared_enum_crud__WEBPACK_IMPORTED_MODULE_9__["Crud"].Create, 'createEdit');
+        this.formUser();
+        return this.ngxSmartModalService.getModal('createEdit').open();
     };
     UsersComponent.prototype.getUsers = function () {
         var _this = this;
@@ -866,11 +874,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TableComponent", function() { return TableComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm5/core.js");
+/* harmony import */ var _enum_crud__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../enum/crud */ "./src/app/shared/enum/crud.ts");
+
 
 
 var TableComponent = /** @class */ (function () {
     function TableComponent() {
         this.eventOutput = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.actionCrud = _enum_crud__WEBPACK_IMPORTED_MODULE_2__["Crud"];
         this.pag = 1;
     }
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
@@ -896,6 +907,28 @@ var TableComponent = /** @class */ (function () {
     return TableComponent;
 }());
 
+
+
+/***/ }),
+
+/***/ "./src/app/shared/enum/crud.ts":
+/*!*************************************!*\
+  !*** ./src/app/shared/enum/crud.ts ***!
+  \*************************************/
+/*! exports provided: Crud */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Crud", function() { return Crud; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+var Crud;
+(function (Crud) {
+    Crud[Crud["Create"] = 0] = "Create";
+    Crud[Crud["Edit"] = 1] = "Edit";
+    Crud[Crud["Delete"] = 2] = "Delete";
+})(Crud || (Crud = {}));
 
 
 /***/ }),
