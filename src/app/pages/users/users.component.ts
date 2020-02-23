@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/model/user';
 import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { Crud } from 'src/app/shared/enum/crud';
 
 @Component({
   selector: 'app-users',
@@ -17,6 +18,7 @@ export class UsersComponent implements OnInit {
   public users: User[] = new Array<User>();
   public user: User = new User();
   public formGroupUser: FormGroup;
+  public actionCrud = Crud;
 
   constructor(
     private usersService: UsersService,
@@ -56,18 +58,25 @@ export class UsersComponent implements OnInit {
     this.user.name = this.formGroupUser.value.name;
   }
 
-  public receiveSettingEmitted(event): NgxSmartModalComponent {
+  public receiveSettingEmitted(event?): NgxSmartModalComponent {
     this.ngxSmartModalService.resetModalData('createEdit');
-    if (event.setting === 'edit') {
+    if (event && event.setting === Crud.Edit) {
       this.formGroupUser.controls['id'].setValue(event.user._id);
       this.formGroupUser.controls['name'].setValue(event.user.name);
       this.formGroupUser.controls['cpf'].setValue(event.user.cpf);
       this.formGroupUser.controls['email'].setValue(event.user.email);
-      this.ngxSmartModalService.setModalData('edit', 'createEdit');
+      this.ngxSmartModalService.setModalData(Crud.Edit, 'createEdit');
       return this.ngxSmartModalService.getModal('createEdit').open();
     }
-    this.formGroupUser.controls['id'].setValue(event._id);
-    return this.ngxSmartModalService.getModal('delete').open();
+
+    if (event && event.setting === Crud.Delete) {
+      this.formGroupUser.controls['id'].setValue(event._id);
+      return this.ngxSmartModalService.getModal('delete').open();
+    }
+
+    this.ngxSmartModalService.setModalData(Crud.Create, 'createEdit');
+    this.formUser();
+    return this.ngxSmartModalService.getModal('createEdit').open();
   }
 
   public getUsers(): Observable<Subscription> {

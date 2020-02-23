@@ -1,7 +1,7 @@
 <div class="container">
   <div class="d-block text-right mb-2 create-user align-center">
     <i class="material-icons cursor-pointer"
-      (click)="ngxSmartModalService.setModalData('create', 'createEdit'); ngxSmartModalService.getModal('createEdit').open(); formUser();">control_point</i>
+      (click)="receiveSettingEmitted()">control_point</i>
   </div>
   <app-table [data]="users" [settings]="true" (eventOutput)="receiveSettingEmitted($event)"></app-table>
 </div>
@@ -20,9 +20,9 @@
     <label class="d-block fw-b">CPF</label>
     <input type="text" maxlength="11" class="d-block mb-2 pl-1 pr-1" formControlName="cpf" />
 
-    <input *ngIf="createEdit.getData() !== 'edit'" [disabled]="!formGroupUser.valid"
+    <input *ngIf="createEdit.getData() === actionCrud.Create" [disabled]="!formGroupUser.valid"
       class="align-center mb-2 button cursor-pointer" type="submit" value="Cadastrar" (click)="insertUser()" />
-    <input *ngIf="createEdit.getData() === 'edit'" [disabled]="!formGroupUser.valid"
+    <input *ngIf="createEdit.getData() === actionCrud.Edit" [disabled]="!formGroupUser.valid"
       class="align-center mb-2 button cursor-pointer" type="submit" value="Atualizar" (click)="updateUser()" />
   </form>
 </ngx-smart-modal>

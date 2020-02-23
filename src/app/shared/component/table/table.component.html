@@ -11,8 +11,8 @@
         {{ value.value}}
       </td>
       <td class="p-relative p-1 settings" *ngIf="settings === true">
-        <i class="material-icons ml-1 mr-1 cursor-pointer" (click)="eventOutput.emit({ setting: 'edit', user: item })">create</i>
-        <i class="material-icons ml-1 mr-1 cursor-pointer" (click)="eventOutput.emit({ setting: 'delete', _id: item._id })">delete_forever</i>
+        <i class="material-icons ml-1 mr-1 cursor-pointer" (click)="eventOutput.emit({ setting: actionCrud.Edit, user: item })">create</i>
+        <i class="material-icons ml-1 mr-1 cursor-pointer" (click)="eventOutput.emit({ setting: actionCrud.Delete, _id: item._id })">delete_forever</i>
       </td>
     </tr>
   </tbody>
