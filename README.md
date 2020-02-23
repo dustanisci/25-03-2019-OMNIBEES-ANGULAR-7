@@ -1,4 +1,14 @@
-# Omnibees
-25/03/2019 - Um exemplo de criar, eliminar, editar e listar clientes por mocky. Utilizado Angular 7, TypeScript and javascript, CSS 3, html 5, responsive(no ui), REST.
+# CRUD
 
-Este site pode ser consultado no endereço: https://dustanisci.github.io/25-03-2019-omnibees-crud-angular7-git-io/
+<b>Descrição:</b> Exemplo de criação, edição, listagem e exclusão de clientes no Angular 9. Implementado uma tabela de listagem e com paginação por 5 itens, possui validações no ato da criação ou edição.
+
+<b>Endereço de acesso:</b> https://dustanisci.github.io/crud-angular9/
+
+<b>Tecnologias utilizadas:</b>
+<ul>
+  <li>Angular 9</li>
+  <li>HTML 5 </li>
+  <li>SCSS / CSS 3</li>
+  <li>TypeScript</li>
+  <li>JavaScript</li>
+</ul>
